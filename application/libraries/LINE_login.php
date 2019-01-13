@@ -148,7 +148,7 @@ class LINE_login {
         )));
         $result = curl_exec($curl);
         if($result === FALSE)
-            throw new Exception('curl_exec() failed.');
+            throw new Exception('curl error: '.$curl_error($curl));
         $curl_response = json_decode($result);
         curl_close($curl);
         $this->access_token = $curl_response->access_token;
@@ -189,7 +189,7 @@ class LINE_login {
             array('Authorization: Bearer '.$this->access_token));
         $result = curl_exec($curl);
         if($result === FALSE)
-            throw new Exception('curl_exec() failed.');
+            throw new Exception('curl error: '.$curl_error($curl));
         if(($response_code = curl_getinfo($curl, CURLINFO_HTTP_CODE)) != '200')
             throw new Exception('LINE server response with code: '.$response_code);
         $curl_response = json_decode($result, TRUE);
