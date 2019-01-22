@@ -33,7 +33,8 @@ class LINE_login {
 
         $this->redirect_uri = $data['redirect_uri'];
 
-        session_start();
+        if(!isset($_SESSION))
+            session_start();
         $_SESSION['LINE_CRSF'] = bin2hex(openssl_random_pseudo_bytes(32));
 
         $query = http_build_query(array(
@@ -67,7 +68,8 @@ class LINE_login {
      * @return string authorization code.
      */
     public function check_authorization_response(){
-        session_start();
+        if(!isset($_SESSION))
+            session_start();
 
         // no LINE_CRSF is set in session
         if(!isset($_SESSION['LINE_CRSF']))
