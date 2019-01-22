@@ -34,11 +34,10 @@ class Line extends CI_Controller {
         // 取得 userId
         // 這邊就可以把 userId 存到資料庫去
         $userId = $this->line_login->get_user_profile()['userId'];
-        $channel_access_token = $this->config->item('Messaging_API_info')['channel_access_token'];
 
         // 以下使用 line php sdk
         // 建立 LINEBot，要用來傳訊息
-        // 第二個參數必給，但我看不懂，看起來也用不到
+        $channel_access_token = $this->config->item('Messaging_API_info')['channel_access_token'];
         $bot = new LINEBot(new CurlHTTPClient($channel_access_token), array(
             'channelSecret' => $this->config->item('Messaging_API_info')['channel_secret']
         ));
