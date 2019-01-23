@@ -7,6 +7,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 use LINE\LINEBot;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
+use LINE\LINEBot\MessageBuilder\TemplateMessageBuilder;
+use LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder;
+use LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use LINE\LINEBot\Response;
 
@@ -61,5 +64,21 @@ class Line extends CI_Controller {
             echo 'Failed to sent image message<br/>';
         else
             echo 'Image message sent<br/>';
+
+        // 傳送 Template 訊息
+        // LINE reference: https://developers.line.biz/en/reference/messaging-api/#template-messages
+        $response = $bot->pushMessage($userId, new TemplateMessageBuilder('altText',
+            new ButtonTemplateBuilder(
+                'title',
+                'content',
+                'https://picsum.photos/1024/960', // 縮圖 (Template 訊息沒有原圖)
+                // LINE reference: https://developers.line.biz/en/reference/messaging-api/#uri-action
+                $uriTmpActB = array(new UriTemplateActionBuilder('label', 'https://www.google.com'))
+            )
+        ));
+        if(!$response->isSucceeded())
+            echo 'Failed to sent template message<br/>';
+        else
+            echo 'Template message sent<br/>';
     }
 }
