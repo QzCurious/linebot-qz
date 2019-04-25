@@ -8,6 +8,7 @@ use LINE\LINEBot;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
+use LINE\LINEBot\Response;
 
 class Line extends CI_Controller {
     public function __construct(){
@@ -44,13 +45,21 @@ class Line extends CI_Controller {
 
         // 傳送文字訊息
         // 'SDK message' 改成你要傳的訊息字串
-        $bot->pushMessage($userId, new TextMessageBuilder('SDK message'));
+        $response = $bot->pushMessage($userId, new TextMessageBuilder('SDK message'));
+        if(!$response->isSucceeded()){
+            echo 'Failed to sent text message<br/>';
+        }
+        else
+            echo 'Text message sent<br/>';
+
         // 傳送圖片訊息
         // ImageMessageBuilder() 兩個參數都要接一個 url
         //   第一個是真正圖片的 url
         //   第二個是預覽用的，也就是要縮圖
-        $bot->pushMessage($userId, new ImageMessageBuilder('https://picsum.photos/200/300', 'https://picsum.photos/200/300'));
-
-        echo 'message sent';
+        $response = $bot->pushMessage($userId, new ImageMessageBuilder('https://picsum.photos/200/300', 'https://picsum.photos/200/300'));
+        if(!$response->isSucceeded())
+            echo 'Failed to sent image message<br/>';
+        else
+            echo 'Image message sent<br/>';
     }
 }
