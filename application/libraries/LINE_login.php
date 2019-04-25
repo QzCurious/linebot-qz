@@ -153,6 +153,9 @@ class LINE_login {
             throw new Exception('curl error: '.$curl_error($curl));
         $curl_response = json_decode($result);
         curl_close($curl);
+        if(!isset($curl_response->access_token)){
+            throw new Exception("LINE response: \n".var_export($curl_response, true));
+        }
         $this->access_token = $curl_response->access_token;
 
         return $this->access_token;
