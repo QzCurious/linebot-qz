@@ -59,7 +59,7 @@ class Line extends CI_Controller {
         // ImageMessageBuilder() 兩個參數都要接一個 url
         //   第一個是真正圖片的 url
         //   第二個是預覽用的，也就是要縮圖
-        $response = $bot->pushMessage($userId, new ImageMessageBuilder('https://picsum.photos/200/300', 'https://picsum.photos/200/300'));
+        $response = $bot->pushMessage($userId, new ImageMessageBuilder('https://picsum.photos/id/868/200/300', 'https://picsum.photos/id/868/600/900'));
         if(!$response->isSucceeded())
             echo 'Failed to sent image message<br/>';
         else
@@ -71,9 +71,9 @@ class Line extends CI_Controller {
             new ButtonTemplateBuilder(
                 'title',
                 'content',
-                'https://picsum.photos/1024/960', // 縮圖 (Template 訊息沒有原圖)
+                'https://picsum.photos/id/755/1024/960', // 縮圖 (Template 訊息沒有原圖)
                 // LINE reference: https://developers.line.biz/en/reference/messaging-api/#uri-action
-                $uriTmpActB = array(new UriTemplateActionBuilder('label', 'https://www.google.com'))
+                array(new UriTemplateActionBuilder('label', 'https://picsum.photos/id/755/1024/960'))
             )
         ));
         if(!$response->isSucceeded())
