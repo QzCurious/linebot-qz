@@ -144,7 +144,7 @@ class LINE_login {
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query(array(
             'grant_type' => 'authorization_code',
             'code' => $this->authorization_code,
-            'redirect_uri' => $redirect_uri,
+            'redirect_uri' => $this->redirect_uri,
             'client_id' => $this->channel_id,
             'client_secret' => $this->channel_secret,
         )));
