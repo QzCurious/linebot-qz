@@ -81,6 +81,8 @@ class LINE_login {
         if($_SESSION['LINE_CRSF'] !== $state)
             throw new Exception('CRSF token not match');
 
+        unset($_SESSION['LINE_CRSF']);
+
         // user denies the premissions requested
         // NOTICE:
         //     LINE server redirect user who does not have
