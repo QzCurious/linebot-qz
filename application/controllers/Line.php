@@ -22,8 +22,12 @@ class Line extends CI_Controller {
     }
 
     public function index(){
+        session_start();
+
         // 產生 LINE 登入連結並顯示於頁面
         $authorization_param = $this->config->item('LINE_authorization_request_param');
+        $authorization_param['redirect_uri'] = 'https://linebot-qz.herokuapp.com/line/login_callback';
+        $_SESSION['redirect_uri'] = $authorization_param['redirect_uri'];
         echo '<a href="'.$this->line_login->authorization_request_string($authorization_param).'">login</a>';
     }
 
@@ -32,8 +36,9 @@ class Line extends CI_Controller {
         $this->line_login->check_authorization_response();
 
         // 為了使用 line login api 的功能，送出 token 請求，這樣才能取得我們需要 userId
-        $access_token_callback = $this->config->item('LINE_authorization_request_param')['redirect_uri'];
+        $access_token_callback = $_SESSION['redirect_uri'];
         $this->line_login->request_access_token($access_token_callback);
+        unset($_SESSION['redirect_uri']);
 
         // 取得 userId
         // 這邊就可以把 userId 存到資料庫去

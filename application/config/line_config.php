@@ -7,7 +7,6 @@ $config['LINE_login_channel_info'] = array(
 
 $config['LINE_authorization_request_param'] = array(
     // make sure this uri is set in App settings of LINE Login channel
-    'redirect_uri' => 'https://linebot-qz.herokuapp.com/line/login_callback',
     'scope' => 'profile',
     'bot_prompt' => 'aggressive',
 );
